@@ -1,0 +1,197 @@
+{
+  "artifact_version": 1,
+  "model_file": "xgb_no_pagevalues.joblib",
+  "target": "Revenue",
+  "primary_feature_set": "PageValues excluded",
+  "score_bands": {
+    "high_cutoff": 0.5654291749000548,
+    "medium_cutoff": 0.31120087504386906,
+    "rates": {
+      "High": {
+        "sessions": 3662,
+        "conversion_rate": 0.3320589841616603
+      },
+      "Medium": {
+        "sessions": 3661,
+        "conversion_rate": 0.1477738322862606
+      },
+      "Low": {
+        "sessions": 4882,
+        "conversion_rate": 0.030929946743138058
+      }
+    }
+  },
+  "cost_thresholds": {
+    "3": 0.6,
+    "5": 0.49000000000000005,
+    "10": 0.33
+  },
+  "cost_sensitivity": [
+    {
+      "R": 3,
+      "threshold": 0.6,
+      "precision": 0.3539397821909033,
+      "recall": 0.5791404612159329,
+      "flagged_percent": 25.579680458828346,
+      "cost_vs_do_nothing_percent": 77.3235499650594,
+      "cost_vs_flag_all_percent": 42.9833932213266,
+      "cost_vs_cheaper_baseline_percent": 77.3235499650594
+    },
+    {
+      "R": 5,
+      "threshold": 0.49000000000000005,
+      "precision": 0.29607682876992236,
+      "recall": 0.7594339622641509,
+      "flagged_percent": 40.09832036050799,
+      "cost_vs_do_nothing_percent": 60.167714884696025,
+      "cost_vs_flag_all_percent": 55.7443915703603,
+      "cost_vs_cheaper_baseline_percent": 60.167714884696025
+    },
+    {
+      "R": 10,
+      "threshold": 0.33,
+      "precision": 0.24549295774647886,
+      "recall": 0.9135220125786163,
+      "flagged_percent": 58.17287996722654,
+      "cost_vs_do_nothing_percent": 36.72431865828092,
+      "cost_vs_flag_all_percent": 68.0489462950374,
+      "cost_vs_cheaper_baseline_percent": 68.0489462950374
+    }
+  ],
+  "observed_months": [
+    "Aug",
+    "Dec",
+    "Feb",
+    "Jul",
+    "June",
+    "Mar",
+    "May",
+    "Nov",
+    "Oct",
+    "Sep"
+  ],
+  "visitor_types": [
+    "New_Visitor",
+    "Other",
+    "Returning_Visitor"
+  ],
+  "technical_category_options": {
+    "OperatingSystems": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "Browser": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "Region": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "TrafficType": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  "default_values": {
+    "Administrative": 0,
+    "Administrative_Duration": 0,
+    "Informational": 0,
+    "Informational_Duration": 0,
+    "ProductRelated": 10,
+    "ProductRelated_Duration": 300,
+    "BounceRates": 0.02,
+    "ExitRates": 0.03,
+    "SpecialDay": 0.0,
+    "Month": "Nov",
+    "VisitorType": "Returning_Visitor",
+    "Weekend": 0,
+    "OperatingSystems": 2,
+    "Browser": 2,
+    "Region": 1,
+    "TrafficType": 2
+  },
+  "reference_rate_method": "5-fold cross-fitted predictions over the deduplicated dataset; not a separate held-out band estimate.",
+  "fit_rows": 12205,
+  "fit_seed": 42,
+  "raw_score_is_probability": false,
+  "calibration": {
+    "raw_oof_brier": 0.18495588129135676,
+    "sigmoid_calibrated_oof_brier": 0.11484393918128237,
+    "reliability_fraction_positive": [
+      0.0008,
+      0.0139,
+      0.0459,
+      0.0713,
+      0.0983,
+      0.1508,
+      0.1869,
+      0.24,
+      0.3262,
+      0.4292
+    ],
+    "reliability_mean_score": [
+      0.0286,
+      0.0365,
+      0.0498,
+      0.0715,
+      0.099,
+      0.1313,
+      0.167,
+      0.2115,
+      0.2666,
+      0.352
+    ],
+    "method": "Sigmoid calibration nested in 5-fold cross-validation",
+    "app_displays_probability": false
+  },
+  "limitations": [
+    "Completed-session scoring only",
+    "PageValues excluded",
+    "Month has 10 observed categories",
+    "Band rates are cross-validated historical estimates",
+    "Associations are not causal"
+  ]
+}

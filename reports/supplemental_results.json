@@ -1,0 +1,296 @@
+{
+  "dataset_rows_source": 12330,
+  "rows_after_dedup": 12205,
+  "duplicates_removed": 125,
+  "positive_rate": 0.15632937320770177,
+  "pagevalues_zero_share": 0.7763211798443261,
+  "conversion_pagevalues_zero": 0.03905013192612137,
+  "conversion_pagevalues_positive": 0.5633699633699634,
+  "duration_over_3h_count": 68,
+  "month_counts": {
+    "May": 3329,
+    "Nov": 2982,
+    "Mar": 1860,
+    "Dec": 1706,
+    "Oct": 549,
+    "Sep": 448,
+    "Aug": 433,
+    "Jul": 432,
+    "June": 285,
+    "Feb": 181
+  },
+  "visitor_rates": {
+    "New_Visitor": {
+      "mean": 0.2493,
+      "count": 1693
+    },
+    "Other": {
+      "mean": 0.1975,
+      "count": 81
+    },
+    "Returning_Visitor": {
+      "mean": 0.1409,
+      "count": 10431
+    }
+  },
+  "matched_model_comparison": [
+    {
+      "feature_set": "with PageValues",
+      "model": "Logistic regression",
+      "fold_pr_auc": [
+        0.6512,
+        0.6248,
+        0.6753,
+        0.6833,
+        0.6831
+      ],
+      "mean_pr_auc": 0.6635541385327672,
+      "std_pr_auc": 0.022637525346134578,
+      "mean_roc_auc": 0.916021357527306
+    },
+    {
+      "feature_set": "with PageValues",
+      "model": "Random forest",
+      "fold_pr_auc": [
+        0.7105,
+        0.7163,
+        0.7519,
+        0.7676,
+        0.7394
+      ],
+      "mean_pr_auc": 0.7371274334664493,
+      "std_pr_auc": 0.021420655971859253,
+      "mean_roc_auc": 0.9283960384555492
+    },
+    {
+      "feature_set": "with PageValues",
+      "model": "XGBoost",
+      "fold_pr_auc": [
+        0.7195,
+        0.7391,
+        0.7526,
+        0.7853,
+        0.7496
+      ],
+      "mean_pr_auc": 0.7492095494023874,
+      "std_pr_auc": 0.021469275108875023,
+      "mean_roc_auc": 0.931731253062981
+    },
+    {
+      "feature_set": "without PageValues",
+      "model": "Logistic regression",
+      "fold_pr_auc": [
+        0.3359,
+        0.2852,
+        0.3864,
+        0.313,
+        0.3298
+      ],
+      "mean_pr_auc": 0.3300618723025667,
+      "std_pr_auc": 0.03318307770633794,
+      "mean_roc_auc": 0.748402732239995
+    },
+    {
+      "feature_set": "without PageValues",
+      "model": "Random forest",
+      "fold_pr_auc": [
+        0.3693,
+        0.3387,
+        0.4019,
+        0.4176,
+        0.3932
+      ],
+      "mean_pr_auc": 0.3841501674332634,
+      "std_pr_auc": 0.02754852597636072,
+      "mean_roc_auc": 0.7779061326501362
+    },
+    {
+      "feature_set": "without PageValues",
+      "model": "XGBoost",
+      "fold_pr_auc": [
+        0.3787,
+        0.3432,
+        0.4045,
+        0.3968,
+        0.3742
+      ],
+      "mean_pr_auc": 0.3794849771525635,
+      "std_pr_auc": 0.021306119717815732,
+      "mean_roc_auc": 0.7811354934998768
+    }
+  ],
+  "learning_curve": [
+    {
+      "training_rows": 1952,
+      "train_pr_auc_mean": 0.7496920993934396,
+      "cv_pr_auc_mean": 0.32602138413138954,
+      "cv_pr_auc_std": 0.026501653191585664
+    },
+    {
+      "training_rows": 3905,
+      "train_pr_auc_mean": 0.6302068136791593,
+      "cv_pr_auc_mean": 0.35582372694295056,
+      "cv_pr_auc_std": 0.02358232376925143
+    },
+    {
+      "training_rows": 5858,
+      "train_pr_auc_mean": 0.5689533638778572,
+      "cv_pr_auc_mean": 0.3741556494681408,
+      "cv_pr_auc_std": 0.022766577066346636
+    },
+    {
+      "training_rows": 7811,
+      "train_pr_auc_mean": 0.5339087528624304,
+      "cv_pr_auc_mean": 0.38049854933344623,
+      "cv_pr_auc_std": 0.01952315820408541
+    }
+  ],
+  "imbalance_comparison": {
+    "class_weighted_xgb_fold_pr_auc": [
+      0.3787,
+      0.3432,
+      0.4045,
+      0.3968,
+      0.3742
+    ],
+    "class_weighted_xgb_mean": 0.3794849771525635,
+    "smote_in_cv_xgb_fold_pr_auc": [
+      0.3489,
+      0.3068,
+      0.3798,
+      0.3668,
+      0.3739
+    ],
+    "smote_in_cv_xgb_mean": 0.35522598724969595,
+    "note": "SMOTE is applied after one-hot encoding inside each CV fold; synthetic categorical coordinates are fractional, so interpret as a sensitivity check."
+  },
+  "calibration": {
+    "raw_oof_brier": 0.18495588129135676,
+    "sigmoid_calibrated_oof_brier": 0.11484393918128237,
+    "reliability_fraction_positive": [
+      0.0008,
+      0.0139,
+      0.0459,
+      0.0713,
+      0.0983,
+      0.1508,
+      0.1869,
+      0.24,
+      0.3262,
+      0.4292
+    ],
+    "reliability_mean_score": [
+      0.0286,
+      0.0365,
+      0.0498,
+      0.0715,
+      0.099,
+      0.1313,
+      0.167,
+      0.2115,
+      0.2666,
+      0.352
+    ],
+    "method": "Sigmoid calibration nested in 5-fold cross-validation",
+    "app_displays_probability": false
+  },
+  "segmentation": {
+    "selected_k": 3,
+    "silhouette": 0.43373403002823335,
+    "candidate_silhouettes": [
+      {
+        "k": 3,
+        "silhouette": 0.43373403002823335
+      },
+      {
+        "k": 4,
+        "silhouette": 0.4087691589956467
+      },
+      {
+        "k": 5,
+        "silhouette": 0.3689662404515702
+      },
+      {
+        "k": 6,
+        "silhouette": 0.36284884393150807
+      }
+    ],
+    "profiles": [
+      {
+        "segment": 0,
+        "sessions": 2307,
+        "conversion_rate": 0.23970524490680536,
+        "median_product_pages": 43.0,
+        "median_product_duration": 1664.14881,
+        "median_exit_rate": 0.018817204
+      },
+      {
+        "segment": 1,
+        "sessions": 9013,
+        "conversion_rate": 0.1498945966936647,
+        "median_product_pages": 17.0,
+        "median_product_duration": 553.0,
+        "median_exit_rate": 0.025
+      },
+      {
+        "segment": 2,
+        "sessions": 885,
+        "conversion_rate": 0.004519774011299435,
+        "median_product_pages": 1.0,
+        "median_product_duration": 0.0,
+        "median_exit_rate": 0.2
+      }
+    ],
+    "features_excluded": [
+      "PageValues",
+      "Revenue"
+    ]
+  },
+  "app_oof_score_bands": {
+    "High": {
+      "sessions": 3662,
+      "conversion_rate": 0.3320589841616603
+    },
+    "Medium": {
+      "sessions": 3661,
+      "conversion_rate": 0.1477738322862606
+    },
+    "Low": {
+      "sessions": 4882,
+      "conversion_rate": 0.030929946743138058
+    }
+  },
+  "app_oof_cost_sensitivity": [
+    {
+      "R": 3,
+      "threshold": 0.6,
+      "precision": 0.3539397821909033,
+      "recall": 0.5791404612159329,
+      "flagged_percent": 25.579680458828346,
+      "cost_vs_do_nothing_percent": 77.3235499650594,
+      "cost_vs_flag_all_percent": 42.9833932213266,
+      "cost_vs_cheaper_baseline_percent": 77.3235499650594
+    },
+    {
+      "R": 5,
+      "threshold": 0.49000000000000005,
+      "precision": 0.29607682876992236,
+      "recall": 0.7594339622641509,
+      "flagged_percent": 40.09832036050799,
+      "cost_vs_do_nothing_percent": 60.167714884696025,
+      "cost_vs_flag_all_percent": 55.7443915703603,
+      "cost_vs_cheaper_baseline_percent": 60.167714884696025
+    },
+    {
+      "R": 10,
+      "threshold": 0.33,
+      "precision": 0.24549295774647886,
+      "recall": 0.9135220125786163,
+      "flagged_percent": 58.17287996722654,
+      "cost_vs_do_nothing_percent": 36.72431865828092,
+      "cost_vs_flag_all_percent": 68.0489462950374,
+      "cost_vs_cheaper_baseline_percent": 68.0489462950374
+    }
+  ],
+  "runtime_seconds": 70.25
+}
