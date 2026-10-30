@@ -354,7 +354,10 @@ def _bar(labels, values, color="#6366f1", yt="", h=300, horiz=False, fmt=".2f"):
             marker=dict(color=color, cornerradius=6),
             text=[f"{v:{fmt}}" for v in values], textposition="outside",
             textfont=dict(size=10, color="#94a3b8")))
-        fig.update_layout(**_layout(h=h, xt=yt, horiz=True) | {"yaxis": {"autorange": "reversed", "gridcolor": "rgba(0,0,0,0)"}})
+        lo = _layout(h=h, xt=yt, showlegend=False)
+        lo["yaxis"]["autorange"] = "reversed"
+        lo["yaxis"]["gridcolor"] = "rgba(0,0,0,0)"
+        fig.update_layout(**lo)
     else:
         fig = go.Figure(go.Bar(x=labels, y=values,
             marker=dict(color=color, cornerradius=6),
