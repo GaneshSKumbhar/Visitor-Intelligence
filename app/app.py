@@ -77,447 +77,312 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# ─── Design System & CSS Tokens ───
+# ─── Design System & CSS Tokens (v3) ───
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
-    --bg-main: #090d16;
-    --bg-surface: #0f1424;
-    --bg-card: rgba(20, 26, 45, 0.85);
-    --bg-card-hover: rgba(26, 34, 58, 0.95);
-    --border-card: rgba(99, 102, 241, 0.16);
-    --border-card-hover: rgba(99, 102, 241, 0.38);
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
-    --accent-indigo: #6366f1;
-    --accent-violet: #8b5cf6;
-    --accent-cyan: #06b6d4;
-    --accent-emerald: #10b981;
-    --accent-amber: #f59e0b;
-    --accent-rose: #f43f5e;
-    --radius-sm: 8px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --radius-pill: 9999px;
-    --shadow-card: 0 12px 32px -4px rgba(0, 0, 0, 0.45), 0 0 16px rgba(99, 102, 241, 0.06);
+/* ── Tokens ── */
+:root{
+    --bg:        #0b0f1a;
+    --surface:   #111827;
+    --card:      #161d2e;
+    --card-h:    #1c2540;
+    --border:    #1f2a44;
+    --bdr-act:   rgba(99,102,241,.45);
+    --primary:   #6366f1;
+    --pdim:      rgba(99,102,241,.12);
+    --success:   #34d399;
+    --warning:   #fbbf24;
+    --danger:    #f87171;
+    --text:      #e2e8f0;
+    --muted:     #64748b;
+    --soft:      #94a3b8;
+    --r-sm:      8px;
+    --r-md:      12px;
+    --r-lg:      18px;
+    --r-pill:    9999px;
+    --sh:        0 4px 24px rgba(0,0,0,.4);
+    --sh-lg:     0 12px 40px rgba(0,0,0,.55);
 }
 
-html, body, .stApp, [data-testid="stAppViewContainer"] {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    background-color: var(--bg-main) !important;
-    color: var(--text-primary) !important;
+/* ── Base ── */
+html,body,.stApp,[data-testid="stAppViewContainer"]{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif!important;
+    background:var(--bg)!important;
+    color:var(--text)!important;
+}
+#MainMenu,footer,[data-testid="stToolbar"],
+header[data-testid="stHeader"],.stDeployButton,
+[data-testid="manage-app-button"],[data-testid="stStatusWidget"]{
+    display:none!important;visibility:hidden!important;height:0!important;
+}
+.block-container{max-width:1380px!important;padding:.5rem 2rem 4rem!important;}
+
+/* ── PUBLIC NAV ── */
+.pub-nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.65rem 1.4rem;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--r-lg);
+    margin-bottom:1.8rem;
+    box-shadow:var(--sh);
+}
+.brand-group{display:flex;align-items:center;gap:10px;}
+.brand-icon{
+    width:36px;height:36px;border-radius:9px;
+    background:var(--primary);
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:800;color:#fff;
+}
+.brand-title{font-size:.95rem;font-weight:700;color:#f1f5f9;letter-spacing:-.02em;}
+.brand-sub{font-size:.60rem;font-weight:600;color:#818cf8;text-transform:uppercase;letter-spacing:.06em;}
+
+/* ── AUTH NAV TOP NAVBAR (authenticated pages) ── */
+.top-navbar{
+    display:flex;align-items:center;
+    padding:.5rem 1.2rem;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--r-lg);
+    margin-bottom:1.1rem;
+    box-shadow:var(--sh);
+}
+.nb-brand{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.nb-logo{
+    width:32px;height:32px;border-radius:8px;
+    background:var(--primary);
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:800;color:#fff;flex-shrink:0;
+}
+.nb-title{font-size:.88rem;font-weight:700;color:#f1f5f9;white-space:nowrap;}
+.nb-sub{font-size:.58rem;font-weight:600;color:#818cf8;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
+.nb-sep{width:1px;height:24px;background:var(--border);flex-shrink:0;margin:0 8px;}
+.nb-user{display:flex;align-items:center;gap:7px;flex-shrink:0;margin-left:auto;}
+.nb-avatar{
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.nb-uname{font-size:.78rem;font-weight:600;color:#e2e8f0;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nb-uemail{font-size:.63rem;color:var(--muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.nb-badge{
+    font-size:.58rem;font-weight:600;padding:2px 7px;
+    border-radius:var(--r-pill);
+    background:var(--pdim);color:#a5b4fc;
+    border:1px solid rgba(99,102,241,.2);white-space:nowrap;
 }
 
-#MainMenu, footer, [data-testid="stToolbar"],
-header[data-testid="stHeader"], .stDeployButton,
-[data-testid="manage-app-button"], [data-testid="stStatusWidget"] {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
+/* ── HERO ── */
+.hero-wrapper{
+    background:linear-gradient(135deg,#0f1629 0%,#151d3a 60%,#111828 100%);
+    border:1px solid var(--border);
+    border-left:3px solid var(--primary);
+    border-radius:var(--r-lg);
+    padding:2.6rem 2.8rem;
+    margin-bottom:1.8rem;
+    overflow:hidden;
+    box-shadow:var(--sh-lg);
+}
+.pill-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--pdim);color:#a5b4fc;
+    padding:.28rem .8rem;border-radius:var(--r-pill);
+    font-size:.68rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;
+    margin-bottom:.9rem;border:1px solid rgba(99,102,241,.25);
+}
+.hero-headline{
+    color:#f8fafc!important;font-size:2.3rem!important;font-weight:800!important;
+    letter-spacing:-.03em;line-height:1.22;margin:0 0 .85rem;max-width:760px;
+}
+.hero-description{
+    color:var(--soft);font-size:.97rem;line-height:1.65;max-width:660px;margin:0 0 1.3rem;
 }
 
-.block-container {
-    max-width: 1440px !important;
-    padding: 1rem 2rem 3.5rem !important;
+/* ── PREVIEW CARD ── */
+.preview-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:1.3rem 1.5rem;box-shadow:var(--sh-lg);
+}
+.preview-status{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);
 }
 
-/* Public Header & Nav */
-.pub-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.85rem 1.6rem;
-    background: linear-gradient(180deg, rgba(20, 26, 45, 0.96) 0%, rgba(15, 20, 36, 0.92) 100%);
-    border: 1px solid rgba(99, 102, 241, 0.22);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
-    margin-bottom: 2rem;
-    backdrop-filter: blur(20px);
-}
-.brand-group {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.brand-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 19px;
-    font-weight: 900;
-    color: #fff;
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
-}
-.brand-title {
-    font-size: 1.12rem;
-    font-weight: 800;
-    color: #f8fafc;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-}
-.brand-sub {
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #818cf8;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+/* ── SECTION HEADER ── */
+.sec-hd{display:flex;align-items:center;gap:.6rem;margin:2rem 0 .9rem;}
+.sec-hd .dot{width:3px;height:18px;border-radius:99px;background:var(--primary);flex-shrink:0;}
+.sec-hd h3{
+    margin:0!important;font-size:1.05rem!important;font-weight:700!important;
+    color:#f1f5f9!important;letter-spacing:-.02em;
 }
 
-/* Hero Section */
-.hero-wrapper {
-    background: linear-gradient(135deg, #121833 0%, #1a1e48 50%, #152244 100%);
-    border: 1px solid rgba(99, 102, 241, 0.24);
-    border-radius: var(--radius-lg);
-    padding: 3.2rem 3rem;
-    margin-bottom: 2.2rem;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow-card);
+/* ── CARDS ── */
+.vi-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:1.25rem 1.35rem;
+    box-shadow:var(--sh);transition:border-color .2s,transform .2s;height:100%;
 }
-.hero-wrapper::after {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -10%;
-    width: 480px;
-    height: 480px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, transparent 70%);
-    pointer-events: none;
+.vi-card:hover{border-color:var(--bdr-act);transform:translateY(-2px);}
+.vi-card .ic{font-size:1.5rem;margin-bottom:.55rem;display:block;}
+.vi-card h4{color:#f1f5f9!important;font-size:.93rem!important;font-weight:700!important;margin:0 0 .35rem!important;}
+.vi-card p{color:var(--soft)!important;font-size:.82rem!important;line-height:1.5!important;margin:0!important;}
+
+/* ── STEP CARDS ── */
+.step-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:1.25rem 1.35rem;
+    position:relative;box-shadow:var(--sh);
+    transition:border-color .2s,transform .2s;height:100%;
 }
-.pill-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(99, 102, 241, 0.15);
-    color: #a5b4fc;
-    padding: 0.35rem 0.95rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.74rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 1.1rem;
-    border: 1px solid rgba(99, 102, 241, 0.3);
+.step-card:hover{border-color:var(--bdr-act);transform:translateY(-2px);}
+.step-num{
+    position:absolute;top:-10px;left:14px;
+    background:var(--primary);color:#fff;
+    font-size:.62rem;font-weight:800;padding:.14rem .55rem;border-radius:var(--r-pill);
 }
-.hero-headline {
-    color: #ffffff !important;
-    font-size: 2.7rem !important;
-    font-weight: 900 !important;
-    letter-spacing: -0.04em;
-    line-height: 1.2;
-    margin: 0 0 1rem;
-    max-width: 820px;
+.step-card h4{color:#f1f5f9!important;font-size:.92rem!important;font-weight:700!important;margin:.32rem 0 .32rem!important;}
+.step-card p{color:var(--soft)!important;font-size:.80rem!important;line-height:1.45!important;margin:0!important;}
+
+/* ── SAMPLE SCENARIO CARDS ── */
+.smp-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:.9rem 1rem;
+    margin-bottom:.5rem;min-height:72px;
 }
-.hero-description {
-    color: #cbd5e1;
-    font-size: 1.12rem;
-    line-height: 1.65;
-    max-width: 720px;
-    margin: 0 0 1.6rem;
+.smp-card h4{color:#f1f5f9!important;font-size:.85rem!important;font-weight:700!important;margin:0 0 .22rem!important;}
+.smp-card p{color:var(--muted)!important;font-size:.75rem!important;margin:0!important;line-height:1.4!important;}
+
+/* ── PREDICTION RESULT ── */
+.int-res{
+    border-radius:var(--r-lg);padding:1.7rem 2rem;
+    border:1px solid var(--border);
+    position:relative;overflow:hidden;margin:1rem 0 1.2rem;box-shadow:var(--sh);
+}
+.int-res::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.int-res.high  {background:rgba(52,211,153,.05); border-color:rgba(52,211,153,.25);}
+.int-res.medium{background:rgba(251,191,36,.05);  border-color:rgba(251,191,36,.25);}
+.int-res.low   {background:rgba(100,116,139,.05); border-color:rgba(100,116,139,.25);}
+.int-res.high::before  {background:var(--success);}
+.int-res.medium::before{background:var(--warning);}
+.int-res.low::before   {background:var(--soft);}
+.int-tag{
+    display:inline-block;padding:.18rem .65rem;
+    border-radius:var(--r-pill);font-size:.62rem;font-weight:700;
+    letter-spacing:.10em;text-transform:uppercase;margin-bottom:.5rem;
+}
+.int-res.high .int-tag  {background:rgba(52,211,153,.12); color:var(--success);}
+.int-res.medium .int-tag{background:rgba(251,191,36,.12);  color:var(--warning);}
+.int-res.low .int-tag   {background:rgba(100,116,139,.12); color:var(--soft);}
+.int-band{font-size:1.75rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.3rem;line-height:1.1;}
+.int-res.high .int-band  {color:var(--success);}
+.int-res.medium .int-band{color:var(--warning);}
+.int-res.low .int-band   {color:var(--soft);}
+.int-desc {color:var(--soft);font-size:.91rem;margin:.28rem 0 .6rem;line-height:1.5;}
+.int-score{color:var(--muted);font-size:.78rem;}
+
+/* ── METRICS ── */
+[data-testid="stMetric"]{
+    background:var(--card)!important;border:1px solid var(--border)!important;
+    border-radius:var(--r-md)!important;padding:1rem 1.2rem!important;
+    box-shadow:var(--sh)!important;transition:border-color .2s,transform .2s!important;
+}
+[data-testid="stMetric"]:hover{border-color:var(--bdr-act)!important;transform:translateY(-2px);}
+[data-testid="stMetricLabel"] p{color:var(--soft)!important;font-size:.73rem!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:.05em!important;}
+[data-testid="stMetricValue"] div{color:#f1f5f9!important;font-weight:800!important;}
+
+/* ── CHART WRAPPERS ── */
+.ch-wrap{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:1.05rem 1.15rem .45rem;
+    box-shadow:var(--sh);margin-bottom:.65rem;
+}
+.ch-wrap h4{color:#f1f5f9!important;font-size:.88rem!important;font-weight:700!important;margin:0 0 .1rem!important;}
+.ch-wrap .ch-sub{color:var(--muted);font-size:.73rem;margin:0 0 .4rem;}
+
+/* ── BUTTONS ── */
+.stButton>button,.stFormSubmitButton>button{
+    border-radius:var(--r-sm)!important;
+    font-family:'Inter',sans-serif!important;font-weight:600!important;
+    font-size:.87rem!important;transition:all .18s ease!important;
+}
+.stFormSubmitButton>button,.stButton>button[kind="primary"]{
+    background:var(--primary)!important;border:none!important;
+    color:#fff!important;min-height:2.7rem!important;
+    font-size:.93rem!important;font-weight:700!important;
+}
+.stFormSubmitButton>button:hover,.stButton>button[kind="primary"]:hover{
+    background:#5254cc!important;transform:translateY(-1px)!important;
+}
+.stButton>button:not([kind="primary"]){
+    background:var(--surface)!important;border:1px solid var(--border)!important;color:var(--text)!important;
+}
+.stButton>button:not([kind="primary"]):hover{
+    border-color:var(--primary)!important;color:#a5b4fc!important;transform:translateY(-1px)!important;
 }
 
-/* Interactive Preview Box */
-.preview-card {
-    background: rgba(15, 20, 36, 0.9);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    border-radius: var(--radius-md);
-    padding: 1.6rem 1.8rem;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(16px);
+/* ── BREADCRUMB ── */
+.crumb-bar{
+    display:flex;align-items:center;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:.5rem 1rem;margin-bottom:.9rem;
 }
-.preview-status {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-}
+.crumb-left{display:flex;align-items:center;gap:7px;font-size:.80rem;color:var(--soft);}
+.crumb-active{color:#a5b4fc;font-weight:600;}
 
-/* Section Header */
-.sec-hd {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    margin: 2.4rem 0 1.1rem;
-}
-.sec-hd .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #6366f1, #06b6d4);
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
-}
-.sec-hd h3 {
-    margin: 0 !important;
-    font-size: 1.28rem !important;
-    font-weight: 800 !important;
-    color: #f8fafc !important;
-    letter-spacing: -0.02em;
-}
+/* ── SIDEBAR ── */
+[data-testid="stSidebar"]{background:var(--surface)!important;border-right:1px solid var(--border)!important;}
 
-/* Cards */
-.vi-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: var(--radius-md);
-    padding: 1.45rem 1.55rem;
-    box-shadow: var(--shadow-card);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    height: 100%;
+/* ── TABS ── */
+[data-testid="stTabs"] [role="tablist"]{
+    background:var(--surface)!important;border-radius:10px!important;
+    padding:4px!important;gap:4px!important;border:1px solid var(--border)!important;
 }
-.vi-card:hover {
-    border-color: var(--border-card-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 22px rgba(99, 102, 241, 0.12);
-}
-.vi-card .ic {
-    font-size: 1.75rem;
-    margin-bottom: 0.75rem;
-    display: block;
-}
-.vi-card h4 {
-    color: #f8fafc !important;
-    font-size: 1.05rem !important;
-    font-weight: 700 !important;
-    margin: 0 0 0.45rem !important;
-}
-.vi-card p {
-    color: #94a3b8 !important;
-    font-size: 0.88rem !important;
-    line-height: 1.55 !important;
-    margin: 0 !important;
-}
+[data-testid="stTabs"] [role="tab"]{border-radius:7px!important;font-weight:600!important;font-size:.85rem!important;}
 
-/* Stepper Workflow */
-.step-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: var(--radius-md);
-    padding: 1.4rem 1.5rem;
-    position: relative;
-    box-shadow: var(--shadow-card);
-    transition: all 0.25s ease;
-    height: 100%;
-}
-.step-card:hover {
-    border-color: var(--border-card-hover);
-    transform: translateY(-2px);
-}
-.step-num {
-    position: absolute;
-    top: -11px;
-    left: 18px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: #ffffff;
-    font-size: 0.68rem;
-    font-weight: 800;
-    padding: 0.18rem 0.65rem;
-    border-radius: var(--radius-pill);
-    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
-}
-.step-card h4 {
-    color: #f8fafc !important;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
-    margin: 0.4rem 0 0.4rem !important;
-}
-.step-card p {
-    color: #94a3b8 !important;
-    font-size: 0.85rem !important;
-    line-height: 1.5 !important;
-    margin: 0 !important;
-}
+/* ── DATAFRAME / EXPANDER ── */
+[data-testid="stDataFrame"]{border:1px solid var(--border)!important;border-radius:var(--r-md)!important;overflow:hidden;}
+[data-testid="stExpander"]{border:1px solid var(--border)!important;border-radius:var(--r-md)!important;background:var(--card)!important;}
 
-/* Prediction Result Cards */
-.int-res {
-    border-radius: var(--radius-lg);
-    padding: 2.2rem 2.4rem;
-    border: 1px solid var(--border-card);
-    position: relative;
-    overflow: hidden;
-    margin: 1.2rem 0 1.5rem;
-    box-shadow: var(--shadow-card);
+/* ── FOOTER ── */
+.app-ft{
+    text-align:center;color:var(--muted);font-size:.74rem;
+    padding:2.2rem 0 1rem;border-top:1px solid var(--border);
+    margin-top:3rem;line-height:1.8;
 }
-.int-res::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-}
-.int-res.high {
-    background: linear-gradient(145deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border-color: rgba(16, 185, 129, 0.3);
-}
-.int-res.high::before {
-    background: linear-gradient(90deg, #10b981, #34d399);
-}
-.int-res.medium {
-    background: linear-gradient(145deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border-color: rgba(245, 158, 11, 0.3);
-}
-.int-res.medium::before {
-    background: linear-gradient(90deg, #f59e0b, #fbbf24);
-}
-.int-res.low {
-    background: linear-gradient(145deg, rgba(100, 116, 139, 0.1) 0%, rgba(15, 23, 42, 0.95) 100%);
-    border-color: rgba(100, 116, 139, 0.3);
-}
-.int-res.low::before {
-    background: linear-gradient(90deg, #64748b, #94a3b8);
-}
-.int-tag {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: var(--radius-pill);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-}
-.int-res.high .int-tag { background: rgba(16, 185, 129, 0.16); color: #34d399; }
-.int-res.medium .int-tag { background: rgba(245, 158, 11, 0.16); color: #fbbf24; }
-.int-res.low .int-tag { background: rgba(100, 116, 139, 0.16); color: #cbd5e1; }
-.int-band {
-    font-size: 2rem;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.4rem;
-    line-height: 1.1;
-}
-.int-res.high .int-band { color: #10b981; }
-.int-res.medium .int-band { color: #f59e0b; }
-.int-res.low .int-band { color: #94a3b8; }
-.int-desc {
-    color: #cbd5e1;
-    font-size: 0.96rem;
-    margin: 0.35rem 0 0.65rem;
-    line-height: 1.5;
-}
+.app-ft a{color:#818cf8;text-decoration:none;font-weight:500;}
 
-/* Metric Boxes */
-[data-testid="stMetric"] {
-    background: var(--bg-card) !important;
-    border: 1px solid var(--border-card) !important;
-    border-radius: var(--radius-md) !important;
-    padding: 1.1rem 1.25rem !important;
-    box-shadow: var(--shadow-card) !important;
-    transition: all 0.25s ease !important;
-}
-[data-testid="stMetric"]:hover {
-    border-color: var(--border-card-hover) !important;
-    transform: translateY(-2px);
-}
-[data-testid="stMetricLabel"] p {
-    color: #94a3b8 !important;
-    font-size: 0.78rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-}
-[data-testid="stMetricValue"] div {
-    color: #f8fafc !important;
-    font-weight: 800 !important;
-}
+/* ═══════════════════════════════════
+   PROFESSIONAL NAVBAR OVERRIDE
+   Makes st.columns-based nav look like
+   a real top navigation bar
+═══════════════════════════════════ */
 
-/* Chart Wrappers */
-.ch-wrap {
-    background: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: var(--radius-md);
-    padding: 1.25rem 1.35rem 0.6rem;
-    box-shadow: var(--shadow-card);
-    margin-bottom: 0.75rem;
-}
-.ch-wrap h4 {
-    color: #f8fafc !important;
-    font-size: 0.96rem !important;
-    font-weight: 700 !important;
-    margin: 0 0 0.15rem !important;
-}
-.ch-wrap .ch-sub {
-    color: #64748b;
-    font-size: 0.78rem;
-    margin: 0 0 0.5rem;
-}
+/* Hide Streamlit's own top padding so our nav sits flush */
+.block-container { padding-top: 0.2rem !important; }
 
-/* Buttons */
-.stButton > button, .stFormSubmitButton > button {
-    border-radius: 12px !important;
-    font-family: 'Inter', sans-serif !important;
-    font-weight: 600 !important;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-.stFormSubmitButton > button, .stButton > button[kind="primary"] {
-    background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%) !important;
+/* Nav link buttons — reset to plain text style */
+div[data-testid="column"].nav-col > div > div > div > button {
+    background: transparent !important;
     border: none !important;
-    color: #ffffff !important;
-    min-height: 3.1rem !important;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
-    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35) !important;
+    color: var(--soft) !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    padding: 0.35rem 0.5rem !important;
+    min-height: unset !important;
+    border-radius: 6px !important;
+    width: 100% !important;
+    transition: color 0.15s, background 0.15s !important;
+    box-shadow: none !important;
 }
-.stFormSubmitButton > button:hover, .stButton > button[kind="primary"]:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5) !important;
-}
-.stButton > button:not([kind="primary"]) {
-    background: rgba(30, 41, 59, 0.65) !important;
-    border: 1px solid rgba(148, 163, 184, 0.15) !important;
+div[data-testid="column"].nav-col > div > div > div > button:hover {
+    background: var(--pdim) !important;
     color: #e2e8f0 !important;
-}
-.stButton > button:not([kind="primary"]):hover {
-    border-color: rgba(99, 102, 241, 0.4) !important;
-    background: rgba(30, 41, 59, 0.9) !important;
-    color: #ffffff !important;
-    transform: translateY(-1px) !important;
+    transform: none !important;
 }
 
-/* Breadcrumb Bar */
-.crumb-bar {
-    display: flex;
-    align-items: center;
-    background: rgba(30, 41, 59, 0.4);
-    border: 1px solid rgba(99, 102, 241, 0.15);
-    border-radius: var(--radius-md);
-    padding: 0.65rem 1.2rem;
-    margin-bottom: 1.1rem;
-}
-.crumb-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.86rem;
-    color: #94a3b8;
-}
-.crumb-active {
-    color: #a5b4fc;
-    font-weight: 700;
-}
-
-/* Footer */
-.app-ft {
-    text-align: center;
-    color: #64748b;
-    font-size: 0.78rem;
-    padding: 2.5rem 0 1rem;
-    border-top: 1px solid rgba(99, 102, 241, 0.12);
-    margin-top: 3.5rem;
-    line-height: 1.8;
-}
-.app-ft a {
-    color: #818cf8;
-    text-decoration: none;
-    font-weight: 500;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -832,39 +697,48 @@ def pstep(n: str, title: str, desc: str) -> None:
 # 🌐 PUBLIC HOMEPAGE (Root Landing Page)
 # ═══════════════════════════════════════
 def pg_home(raw: pd.DataFrame, meta: dict, results: dict):
-    # Public Navbar
+    # ── Professional Public Navbar ──
+    # HTML shell (brand on left, nav links text in centre, CTA on right)
     st.markdown("""
-    <div class="pub-nav">
-        <div class="brand-group">
-            <div class="brand-icon">VI</div>
+    <div style="
+        display:flex; align-items:center; justify-content:space-between;
+        padding:.6rem 1.4rem;
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:14px;
+        margin-bottom:1.5rem;
+        box-shadow:0 2px 12px rgba(0,0,0,.3);
+    ">
+        <div style="display:flex;align-items:center;gap:9px;">
+            <div style="width:34px;height:34px;border-radius:9px;background:var(--primary);
+                display:flex;align-items:center;justify-content:center;
+                font-size:13px;font-weight:800;color:#fff;">VI</div>
             <div>
-                <div class="brand-title">Visitor Intelligence</div>
-                <div class="brand-sub">AI Purchase Intent Engine</div>
+                <div style="font-size:.9rem;font-weight:700;color:#f1f5f9;letter-spacing:-.02em;">Visitor Intelligence</div>
+                <div style="font-size:.58rem;color:#818cf8;font-weight:600;text-transform:uppercase;letter-spacing:.07em;">Purchase Intent Engine</div>
             </div>
+        </div>
+        <div style="color:var(--muted);font-size:.75rem;">
+            Navigate using the links below &nbsp;▾
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Secondary Navigation Bar for Public Visitors
-    p_c1, p_c2, p_c3, p_c4, p_c5, p_c6 = st.columns([1, 1, 1, 1, 1.2, 1.3], vertical_alignment="center")
-    with p_c1:
-        st.button("🏠 Home", key="pnav_home", on_click=nav_to, args=("Home",), use_container_width=True)
-    with p_c2:
-        st.button("🔬 Methodology", key="pnav_meth", on_click=nav_to, args=("Methodology",), use_container_width=True)
-    with p_c3:
-        st.button("ℹ️ About", key="pnav_about", on_click=nav_to, args=("About",), use_container_width=True)
-    with p_c4:
-        st.button("📊 Insights", key="pnav_ins", on_click=nav_to, args=("Insights",), use_container_width=True)
-    with p_c5:
-        if "user" in st.session_state:
-            st.button("🚪 Logout", key="pnav_logout", on_click=do_logout, use_container_width=True)
-        else:
-            st.button("🔑 Sign In", key="pnav_login", on_click=nav_to, args=("Login",), use_container_width=True)
-    with p_c6:
-        label = "🚀 Open Dashboard" if "user" in st.session_state else "🚀 Get Started"
-        st.button(label, key="pnav_getstart", on_click=nav_to, args=("Overview",), type="primary", use_container_width=True)
-
-    st.markdown("<div style='margin-bottom: 1.8rem;'></div>", unsafe_allow_html=True)
+    # Streamlit buttons row (nav links + CTAs)
+    pc1, pc2, pc3, pc4, _sp, pc5, pc6 = st.columns([.9, 1.1, .8, .7, 1.2, 1.0, 1.2], vertical_alignment="center")
+    pc1.button("Home",        key="pnav_home",  on_click=nav_to, args=("Home",),        use_container_width=True)
+    pc2.button("Methodology", key="pnav_meth",  on_click=nav_to, args=("Methodology",), use_container_width=True)
+    pc3.button("Insights",    key="pnav_ins",   on_click=nav_to, args=("Insights",),    use_container_width=True)
+    pc4.button("About",       key="pnav_about", on_click=nav_to, args=("About",),       use_container_width=True)
+    # spacer column intentionally empty
+    if "user" in st.session_state:
+        pc5.button("Sign out",  key="pnav_logout", on_click=do_logout, use_container_width=True)
+        pc6.button("Open dashboard", key="pnav_dash", on_click=nav_to, args=("Overview",), type="primary", use_container_width=True)
+    else:
+        pc5.button("Sign in",    key="pnav_login",    on_click=nav_to, args=("Login",),    use_container_width=True)
+        pc6.button("Get started",key="pnav_getstart", on_click=nav_to, args=("Overview",), type="primary", use_container_width=True)
+    st.markdown("<div style='height:1px;background:var(--border);margin:.5rem 0 1.4rem;'></div>",
+                unsafe_allow_html=True)
 
     # ── Section 1: Hero Section ──
     h_col1, h_col2 = st.columns([1.35, 1.0], vertical_alignment="center")
@@ -1252,109 +1126,247 @@ def pg_overview(model, meta, results, raw):
 # ═══════════════════════════════════════
 # PAGE 2 — PREDICT INTENT
 # ═══════════════════════════════════════
-def pg_predict(model, meta, limits, ratio, results):
+def pg_predict(model, meta, limits, ratio, results, raw: pd.DataFrame | None = None):
     hero(
         "Real-Time Purchase Intent Predictor",
         "Score active sessions directly through the production XGBoost pipeline. "
         "Excludes PageValues to ensure legitimate, leakage-free operational decision support.",
         "PREDICTIVE INFERENCE ENGINE",
     )
-    st.info("🛡️ **Leakage Protection Enabled:** `PageValues` is omitted to preserve production realism.", icon="🛡️")
+    st.info(
+        "🛡️ **Leakage Protection Enabled:** `PageValues` is omitted to preserve production realism. "
+        "Bounce & exit rates are derived automatically from real dataset statistics — they cannot be entered manually.",
+        icon="🛡️",
+    )
 
-    tab1, tab2 = st.tabs(["⚡ Single Session Inference", "📄 CSV Batch Scoring Engine"])
+    tab1, tab2 = st.tabs(["⚡ Dynamic Session Scorer", "📄 CSV Batch Scoring Engine"])
     with tab1:
-        _single_predict_view(model, meta, limits, ratio)
+        _single_predict_view(model, meta, limits, ratio, raw)
     with tab2:
         _batch_predict_view(model, meta, limits, ratio)
 
 
-def _single_predict_view(model, meta, limits, ratio):
-    df_defaults = meta["default_values"]
-    for feat in FEATURE_COLUMNS:
-        st.session_state.setdefault("field_" + feat, df_defaults[feat])
+def _derive_session_features(
+    browsing_depth: str,
+    avg_time_per_product: float,
+    admin_pages: int,
+    info_pages: int,
+    is_focused: bool,
+    raw: pd.DataFrame,
+) -> dict[str, float]:
+    """
+    Derive behavioral session aggregates from high-level session journey inputs.
+    Bounce and exit rates are derived from real dataset statistics for the
+    corresponding browsing depth bucket — the user cannot inject arbitrary values.
+    """
+    # Map browsing depth labels to product page count ranges (sampled from dataset percentiles)
+    depth_map = {
+        "Just arrived (1–2 pages)":       (1,   2),
+        "Light browsing (3–6 pages)":      (3,   6),
+        "Active browsing (7–15 pages)":    (7,  15),
+        "Deep research (16–30 pages)":     (16, 30),
+        "Intensive session (31+ pages)":   (31, 999),
+    }
+    low, high = depth_map[browsing_depth]
+    # Use midpoint deterministically; cap at the dataset observed maximum
+    display_high = min(high, 45)  # dataset max for ProductRelated is ~705 but representative cap is 45
+    prod_count = int(round((low + min(high, 45)) / 2))
+    prod_count = max(prod_count, low)  # ensure at least the lower bound
+    prod_duration = round(prod_count * avg_time_per_product, 1)
 
-    presets = {
-        "High-Intent Buyer": (
-            "🟢", "Heavy product browsing, minimal bounce, returning shopper",
-            {"ProductRelated": 45, "ProductRelated_Duration": 2400.0, "ExitRates": 0.005, "BounceRates": 0.001, "VisitorType": "Returning_Visitor", "Month": "Nov"},
-        ),
-        "Hesitant Evaluator": (
-            "🟡", "Moderate product activity, looking around catalog",
-            {"ProductRelated": 12, "ProductRelated_Duration": 350.0, "ExitRates": 0.025, "BounceRates": 0.01, "VisitorType": "Returning_Visitor", "Month": "Nov"},
-        ),
-        "Casual / Bounce Risk": (
-            "🔴", "Single-page arrival, rapid exit velocity",
-            {"ProductRelated": 2, "ProductRelated_Duration": 18.0, "ExitRates": 0.18, "BounceRates": 0.15, "VisitorType": "Returning_Visitor", "Month": "Nov"},
-        ),
-        "New Explorer": (
-            "🟣", "First-time visitor researching offerings",
-            {"ProductRelated": 18, "ProductRelated_Duration": 650.0, "ExitRates": 0.015, "BounceRates": 0.005, "VisitorType": "New_Visitor", "Month": "Dec"},
-        ),
+    admin_duration = round(admin_pages * 45.0, 1)   # ~45 sec avg admin page dwell
+    info_duration  = round(info_pages  * 60.0, 1)   # ~60 sec avg info page dwell
+
+    # Derive bounce & exit rates from the real dataset's statistics
+    # for sessions in the same product-page-count bucket.
+    # This prevents gamification — rates come from observed data, not user input.
+    mask = (raw["ProductRelated"] >= low) & (raw["ProductRelated"] <= high)
+    bucket = raw[mask]
+    if len(bucket) >= 10:
+        bounce_rate = float(bucket["BounceRates"].median())
+        exit_rate   = float(bucket["ExitRates"].median())
+    else:
+        # Fallback to full-dataset median if bucket is too thin
+        bounce_rate = float(raw["BounceRates"].median())
+        exit_rate   = float(raw["ExitRates"].median())
+
+    # Focused sessions (add-to-cart intent) have lower exit velocity
+    if is_focused:
+        exit_rate   = round(exit_rate   * 0.55, 5)
+        bounce_rate = round(bounce_rate * 0.45, 5)
+
+    return {
+        "Administrative":            admin_pages,
+        "Administrative_Duration":   admin_duration,
+        "Informational":             info_pages,
+        "Informational_Duration":    info_duration,
+        "ProductRelated":            prod_count,
+        "ProductRelated_Duration":   prod_duration,
+        "BounceRates":               round(bounce_rate, 5),
+        "ExitRates":                 round(exit_rate,   5),
     }
 
-    sec("Quick-Load Sample Scenarios")
-    st.caption("Select a scenario to populate session features with realistic browsing aggregates:")
-    cols_pre = st.columns(4)
-    for col, (lbl, (ic, desc, vals)) in zip(cols_pre, presets.items()):
-        with col:
-            st.markdown(f'<div class="smp-card"><h4>{ic} {lbl}</h4><p>{desc}</p></div>', unsafe_allow_html=True)
-            if st.button(f"Load {lbl}", key=f"btn_pre_{lbl}", use_container_width=True):
-                for k, v in {**df_defaults, **vals}.items():
-                    st.session_state["field_" + k] = v
-                st.rerun()
 
-    with st.form("session_predict_form"):
-        cm = {c: int(limits[c][1]) for c in COUNT_COLUMNS}
-        dm = {c: float(limits[c][1]) for c in DURATION_COLUMNS}
+def _single_predict_view(model, meta, limits, ratio, raw: pd.DataFrame | None = None):  # type: ignore[assignment]
+    # raw is passed in from load_assets; fall back gracefully
+    if raw is None:
+        st.error("Dataset unavailable — cannot derive behavioral rates.", icon="❌")
+        return
 
-        sec("1. Page Engagement Aggregates")
-        st.caption("Session page counts and cumulative dwell durations.")
-        p1, p2, p3 = st.columns(3)
-        with p1:
-            admin = st.number_input("Administrative Pages", 0, cm["Administrative"], step=1, key="field_Administrative")
-            admin_d = st.number_input("Admin Duration (sec)", 0.0, dm["Administrative_Duration"], step=10.0, key="field_Administrative_Duration")
-        with p2:
-            info_p = st.number_input("Informational Pages", 0, cm["Informational"], step=1, key="field_Informational")
-            info_d = st.number_input("Info Duration (sec)", 0.0, dm["Informational_Duration"], step=10.0, key="field_Informational_Duration")
-        with p3:
-            prod = st.number_input("Product Pages", 0, cm["ProductRelated"], step=1, key="field_ProductRelated")
-            prod_d = st.number_input("Product Duration (sec)", 0.0, dm["ProductRelated_Duration"], step=30.0, key="field_ProductRelated_Duration")
+    st.markdown("""
+    <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.22);
+        border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.1rem;">
+    <strong style="color:#a5b4fc;">How dynamic scoring works:</strong>
+    <span style="color:#94a3b8;font-size:0.88rem;">
+      Describe the visitor's session journey using the controls below.
+      Bounce &amp; exit rates are <em>automatically derived from observed dataset statistics</em>
+      for that browsing depth — you cannot manually enter them, preventing
+      inflated or cherry-picked scores.
+    </span>
+    </div>
+    """, unsafe_allow_html=True)
 
-        sec("2. Behavioral Velocity Signals")
-        st.caption("Google Analytics engagement signals for this session.")
-        b1, b2, b3 = st.columns(3)
-        bounce = b1.number_input("Bounce Rate", float(limits["BounceRates"][0]), float(limits["BounceRates"][1]), step=0.001, format="%.4f", key="field_BounceRates")
-        exit_r = b2.number_input("Exit Rate", float(limits["ExitRates"][0]), float(limits["ExitRates"][1]), step=0.001, format="%.4f", key="field_ExitRates")
-        special = b3.select_slider("Special Day Closeness", options=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0], key="field_SpecialDay")
+    # ── Section A: Session Context (knowable from server/GA at session start) ──
+    sec("1. Session Context  ·  Auto-detected from environment")
+    st.caption("These values come from the visitor's browser, referral channel, and calendar — not their browsing behaviour.")
 
-        sec("3. Visitor & Technical Context")
-        v1, v2, v3 = st.columns(3)
-        month = v1.selectbox("Month of Session", meta["observed_months"], key="field_Month")
-        visitor = v2.selectbox("Visitor Cohort", meta["visitor_types"], format_func=lambda x: x.replace("_", " "), key="field_VisitorType")
-        weekend = v3.selectbox("Weekend Session?", [0, 1], format_func=lambda x: "Yes (Weekend)" if x else "No (Weekday)", key="field_Weekend")
+    ctx1, ctx2, ctx3 = st.columns(3)
+    month   = ctx1.selectbox("Month of Visit", meta["observed_months"],
+                              index=meta["observed_months"].index("Nov") if "Nov" in meta["observed_months"] else 0,
+                              key="dyn_Month",
+                              help="Calendar month of the session. Automatically from server timestamp.")
+    visitor = ctx2.selectbox("Visitor Cohort",
+                              meta["visitor_types"],
+                              format_func=lambda x: x.replace("_", " "),
+                              key="dyn_VisitorType",
+                              help="New, Returning, or Other — from browser cookie / GA.")
+    weekend = ctx3.selectbox("Session Timing",
+                              [0, 1],
+                              format_func=lambda x: "Weekend" if x else "Weekday",
+                              key="dyn_Weekend",
+                              help="Automatically derived from server date.")
 
-        tech = meta["technical_category_options"]
-        t1, t2, t3, t4 = st.columns(4)
-        sel = {}
-        for col, (feat, title) in zip([t1, t2, t3, t4], [("OperatingSystems", "OS Code"), ("Browser", "Browser Code"), ("Region", "Region Code"), ("TrafficType", "Traffic Source Code")]):
-            sel[feat] = col.selectbox(title, tech[feat], key="field_" + feat)
+    tech     = meta["technical_category_options"]
+    tc1, tc2, tc3, tc4 = st.columns(4)
+    os_code  = tc1.selectbox("OS",      tech["OperatingSystems"], key="dyn_OS",
+                              help="Detected from User-Agent header.")
+    br_code  = tc2.selectbox("Browser", tech["Browser"],          key="dyn_Browser",
+                              help="Detected from User-Agent header.")
+    reg_code = tc3.selectbox("Region",  tech["Region"],           key="dyn_Region",
+                              help="Derived from visitor IP geolocation.")
+    trf_code = tc4.selectbox("Traffic Source", tech["TrafficType"], key="dyn_Traffic",
+                              help="Traffic channel code from UTM parameters / GA.")
 
-        submitted = st.form_submit_button("🔮  Compute Purchase Intent Score", type="primary", use_container_width=True)
+    special  = ctx1.select_slider("Special Day Proximity",
+                                  options=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+                                  value=0.0,
+                                  key="dyn_SpecialDay",
+                                  help="0 = normal day, 1 = special day (e.g. Valentine's). Comes from calendar.")
 
-    if submitted:
+    # ── Section B: Session Journey (describes what the visitor DID) ──
+    sec("2. Session Journey  ·  Describe what the visitor browsed")
+    st.caption("Select the visitor's browsing pattern. Bounce & exit rates are computed automatically from real data statistics — they cannot be entered manually.")
+
+    depth_options = [
+        "Just arrived (1–2 pages)",
+        "Light browsing (3–6 pages)",
+        "Active browsing (7–15 pages)",
+        "Deep research (16–30 pages)",
+        "Intensive session (31+ pages)",
+    ]
+
+    j1, j2 = st.columns([1.4, 1.0])
+    with j1:
+        browsing_depth = st.select_slider(
+            "Product Browsing Depth",
+            options=depth_options,
+            value="Active browsing (7–15 pages)",
+            key="dyn_depth",
+            help="How many product pages did the visitor view this session?",
+        )
+    with j2:
+        avg_time = st.slider(
+            "Avg. Time per Product Page (sec)",
+            min_value=5,
+            max_value=300,
+            value=45,
+            step=5,
+            key="dyn_avg_time",
+            help="Estimated average dwell time per product page. Longer = more engaged.",
+        )
+
+    j3, j4, j5 = st.columns(3)
+    admin_pages = j3.number_input(
+        "Admin Pages Visited",
+        min_value=0, max_value=20, value=0, step=1,
+        key="dyn_admin",
+        help="Account, cart, checkout-related pages. Typically 0–3 for normal browsing.",
+    )
+    info_pages = j4.number_input(
+        "Info / Help Pages Visited",
+        min_value=0, max_value=10, value=0, step=1,
+        key="dyn_info",
+        help="FAQ, About, Policy pages. Typically 0–2.",
+    )
+    is_focused = j5.toggle(
+        "Focused / Add-to-cart intent",
+        value=False,
+        key="dyn_focused",
+        help="Enable if the visitor showed strong buying intent (e.g., added to cart, visited checkout). "
+             "Reduces exit/bounce rates by ~45–55% to match observed buyer behaviour.",
+    )
+
+    # ── Live Feature Preview ──
+    derived = _derive_session_features(
+        browsing_depth, float(avg_time),
+        int(admin_pages), int(info_pages),
+        bool(is_focused), raw,
+    )
+
+    with st.expander("🔍 View auto-derived behavioral features", expanded=False):
+        st.caption("These values are computed from your journey inputs and real dataset statistics — not entered by hand.")
+        prev_cols = st.columns(4)
+        prev_cols[0].metric("Product Pages", f"{derived['ProductRelated']}")
+        prev_cols[1].metric("Product Duration", f"{derived['ProductRelated_Duration']:.0f}s")
+        prev_cols[2].metric("Bounce Rate (derived)", f"{derived['BounceRates']:.4f}")
+        prev_cols[3].metric("Exit Rate (derived)",   f"{derived['ExitRates']:.4f}")
+        sub_cols = st.columns(4)
+        sub_cols[0].metric("Admin Pages",    f"{derived['Administrative']}")
+        sub_cols[1].metric("Admin Duration", f"{derived['Administrative_Duration']:.0f}s")
+        sub_cols[2].metric("Info Pages",     f"{derived['Informational']}")
+        sub_cols[3].metric("Info Duration",  f"{derived['Informational_Duration']:.0f}s")
+        # compute bucket size for caption
+        depth_map_local = {
+            "Just arrived (1–2 pages)":       (1,  2),
+            "Light browsing (3–6 pages)":      (3,  6),
+            "Active browsing (7–15 pages)":    (7, 15),
+            "Deep research (16–30 pages)":     (16, 30),
+            "Intensive session (31+ pages)":   (31, 999),
+        }
+        b_lo, b_hi = depth_map_local[browsing_depth]
+        bucket_size = int(((raw["ProductRelated"] >= b_lo) & (raw["ProductRelated"] <= b_hi)).sum())
+        st.caption(f"Bounce & exit rates are medians from {bucket_size:,} real sessions with similar product browsing depth.")
+
+    # ── Score Button ──
+    st.markdown("<div style='height:0.5rem;'></div>", unsafe_allow_html=True)
+    if st.button("🔮  Compute Purchase Intent Score", type="primary", use_container_width=True, key="dyn_score_btn"):
         row = {
-            "Administrative": admin, "Administrative_Duration": admin_d,
-            "Informational": info_p, "Informational_Duration": info_d,
-            "ProductRelated": prod, "ProductRelated_Duration": prod_d,
-            "BounceRates": bounce, "ExitRates": exit_r, "SpecialDay": special,
-            "Month": month, "VisitorType": visitor, "Weekend": weekend, **sel,
+            **derived,
+            "SpecialDay":     special,
+            "Month":          month,
+            "VisitorType":    visitor,
+            "Weekend":        weekend,
+            "OperatingSystems": os_code,
+            "Browser":          br_code,
+            "Region":           reg_code,
+            "TrafficType":      trf_code,
         }
         try:
             with st.spinner("Executing pipeline transformation and XGBoost scoring…"):
                 clean = validate_frame(pd.DataFrame([row]), meta, limits)
                 result = score_sessions(model, clean, meta, ratio).iloc[0].to_dict()
                 st.session_state["last_result"] = result
-                st.session_state["last_input"] = row
+                st.session_state["last_input"]  = row
         except InputValidationError as exc:
             st.error(str(exc), icon="⚠️")
         except Exception:
@@ -1362,7 +1374,11 @@ def _single_predict_view(model, meta, limits, ratio):
             st.error("Error executing model inference. Please verify inputs.", icon="❌")
 
     if "last_result" in st.session_state:
-        _render_prediction_output(st.session_state["last_result"], st.session_state.get("last_input", {}), ratio, meta, limits)
+        _render_prediction_output(
+            st.session_state["last_result"],
+            st.session_state.get("last_input", {}),
+            ratio, meta, limits,
+        )
 
 
 def _render_prediction_output(result, inp, ratio, meta, limits):
@@ -1781,53 +1797,74 @@ if current_page not in ("Home", "Login"):
     }
 
     with st.container():
-        col_brand, col_nav, col_user = st.columns([1.8, 4.4, 2.0], vertical_alignment="center")
+        user = st.session_state.get("user")
 
-        with col_brand:
-            st.markdown("""
-            <div style="display:flex;align-items:center;gap:10px;">
-                <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);width:40px;height:40px;
-                    border-radius:12px;display:flex;align-items:center;justify-content:center;
-                    font-size:18px;color:#fff;font-weight:900;box-shadow:0 4px 16px rgba(99,102,241,0.35);">VI</div>
-                <div>
-                    <div style="font-size:1.05rem;font-weight:800;color:#f8fafc;letter-spacing:-0.02em;line-height:1.2;">Visitor Intelligence</div>
-                    <div style="font-size:0.67rem;color:#818cf8;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">AI Purchase Intent Engine</div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        # ── Pre-build user HTML safely (no nested f-strings) ──
+        if user:
+            display_name = user.get("name") or user.get("email", "Analyst").split("@")[0]
+            initials = display_name[:2].upper()
+            provider = user.get("provider", "password")
+            badge_label = {"google.com": "Google", "password": "Email", "demo": "Guest"}.get(provider, "Auth")
+            user_html = (
+                '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">'
+                '<div style="width:28px;height:28px;border-radius:50%;background:#6366f1;'
+                'display:flex;align-items:center;justify-content:center;'
+                'font-size:11px;font-weight:700;color:#fff;">' + initials + '</div>'
+                '<div>'
+                '<div style="font-size:.80rem;font-weight:600;color:#e2e8f0;max-width:130px;'
+                'overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + display_name + '</div>'
+                '<div style="font-size:.60rem;font-weight:600;padding:1px 6px;border-radius:99px;'
+                'background:rgba(99,102,241,.12);color:#a5b4fc;border:1px solid rgba(99,102,241,.2);'
+                'display:inline-block;">' + badge_label + '</div>'
+                '</div></div>'
+            )
+        else:
+            user_html = ""
 
-        with col_nav:
-            if "top_main_segmented_control" not in st.session_state or st.session_state["top_main_segmented_control"] not in nav_pages:
-                st.session_state["top_main_segmented_control"] = current_page
+        # ── Render navbar shell ──
+        st.markdown(
+            '<div style="display:flex;align-items:center;justify-content:space-between;'
+            'padding:.55rem 1.3rem;background:var(--surface);border:1px solid var(--border);'
+            'border-radius:14px;margin-bottom:.9rem;box-shadow:0 2px 12px rgba(0,0,0,.35);">'
+            '<div style="display:flex;align-items:center;gap:9px;flex-shrink:0;">'
+            '<div style="width:32px;height:32px;border-radius:8px;background:var(--primary);'
+            'display:flex;align-items:center;justify-content:center;'
+            'font-size:13px;font-weight:800;color:#fff;">VI</div>'
+            '<div>'
+            '<div style="font-size:.88rem;font-weight:700;color:#f1f5f9;letter-spacing:-.02em;line-height:1.2;">Visitor Intelligence</div>'
+            '<div style="font-size:.58rem;font-weight:600;color:#818cf8;text-transform:uppercase;letter-spacing:.07em;">Purchase Intent Engine</div>'
+            '</div></div>'
+            + user_html +
+            '</div>',
+            unsafe_allow_html=True,
+        )
 
+        # ── Segmented nav + sign-out button in one row ──
+        if "top_main_segmented_control" not in st.session_state or st.session_state["top_main_segmented_control"] not in nav_pages:
+            st.session_state["top_main_segmented_control"] = current_page
+
+        nav_col, usr_btn_col = st.columns([5.5, 1.2], vertical_alignment="center")
+        with nav_col:
             st.segmented_control(
-                "Top Navigation",
+                "Navigation",
                 options=nav_pages,
                 format_func=lambda p: f"{nav_icons[p]} {p}",
                 key="top_main_segmented_control",
                 on_change=on_top_nav_change,
                 label_visibility="collapsed",
             )
-
-        with col_user:
-            user = st.session_state.get("user")
+        with usr_btn_col:
             if user:
-                u_info_col, u_btn_col = st.columns([1.4, 1.0], vertical_alignment="center")
-                display_name = user.get("name") or user.get("email", "Analyst").split("@")[0]
-                with u_info_col:
-                    st.markdown(f"""
-                    <div style="text-align:right;">
-                        <div style="font-size:0.83rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{display_name}</div>
-                        <div style="font-size:0.68rem;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{user.get("email","")}</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                with u_btn_col:
-                    st.button("🚪 Logout", key="top_navbar_logout_btn", on_click=do_logout, use_container_width=True)
+                st.button("Sign out", key="top_navbar_logout_btn", on_click=do_logout,
+                          use_container_width=True)
             else:
-                st.button("🔑 Sign In", key="top_navbar_signin_btn", on_click=nav_to, args=("Login",), use_container_width=True)
+                st.button("Sign in", key="top_navbar_signin_btn", on_click=nav_to,
+                          args=("Login",), use_container_width=True, type="primary")
 
-        st.markdown('<div style="height:1px;background:linear-gradient(90deg,rgba(99,102,241,0.3) 0%,rgba(139,92,246,0.1) 60%,transparent 100%);margin:0.7rem 0 1.2rem;"></div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div style="height:1px;background:var(--border);margin:.2rem 0 1rem;"></div>',
+            unsafe_allow_html=True,
+        )
 
     # Subpage Breadcrumb
     if current_page != "Overview":
@@ -1904,7 +1941,7 @@ elif current_page == "Login":
 elif current_page == "Overview":
     pg_overview(model, metadata, results, dataset)
 elif current_page == "Predict Intent":
-    pg_predict(model, metadata, input_limits, ratio, results)
+    pg_predict(model, metadata, input_limits, ratio, results, raw=dataset)
 elif current_page == "Insights":
     pg_insights(metadata, results, dataset)
 elif current_page == "Methodology":
