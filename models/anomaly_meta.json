@@ -1,0 +1,40 @@
+{
+  "model_file": "anomaly_detector.joblib",
+  "contamination": 0.05,
+  "n_anomalies_found": 611,
+  "anomaly_pct": 5.01,
+  "feature_cols": [
+    "Administrative",
+    "Administrative_Duration",
+    "Informational",
+    "Informational_Duration",
+    "ProductRelated",
+    "ProductRelated_Duration",
+    "BounceRates",
+    "ExitRates",
+    "SpecialDay"
+  ],
+  "top_deviation_features": [
+    "BounceRates",
+    "ProductRelated_Duration",
+    "ExitRates",
+    "SpecialDay",
+    "Informational"
+  ],
+  "anomaly_profile": {
+    "median_product_pages": 7.0,
+    "median_product_duration": 91.5,
+    "median_bounce_rate": 0.0667,
+    "median_exit_rate": 0.1,
+    "conversion_rate": 0.09
+  },
+  "normal_profile": {
+    "median_product_pages": 19.0,
+    "median_product_duration": 627.2,
+    "median_bounce_rate": 0.0021,
+    "median_exit_rate": 0.0249,
+    "conversion_rate": 0.1598
+  },
+  "score_range": "0-100 (100 = most suspicious / most anomalous)",
+  "threshold_for_flag": 60.0
+}
