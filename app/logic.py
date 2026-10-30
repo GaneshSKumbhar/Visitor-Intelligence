@@ -11,6 +11,8 @@ FEATURE_COLUMNS = [
     "BounceRates", "ExitRates", "SpecialDay", "Month", "OperatingSystems",
     "Browser", "Region", "TrafficType", "VisitorType", "Weekend",
 ]
+# PageValues is deliberately excluded from model input (leakage prevention).
+# It must NOT appear in FEATURE_COLUMNS — the form never collects it.
 COUNT_COLUMNS = ["Administrative", "Informational", "ProductRelated"]
 DURATION_COLUMNS = [
     "Administrative_Duration", "Informational_Duration", "ProductRelated_Duration"
@@ -51,6 +53,8 @@ def validate_frame(
         "SpecialDay", "Weekend", *TECHNICAL_COLUMNS
     ]
     for col in numeric:
+        if col not in clean.columns:
+            continue
         values = pd.to_numeric(clean[col], errors="coerce")
         if values.isna().any() or not np.isfinite(values.to_numpy(dtype=float)).all():
             raise InputValidationError(f"{col} must contain valid numeric values.")
