@@ -1,15 +1,17 @@
-# Versions observed in original Colab output
+# Versions observed in original Colab output (updated for Python 3.11 compatibility)
 joblib==1.6.0
 matplotlib==3.10.0
 numpy==2.1.3
 pandas==2.2.3
 scikit-learn==1.6.1
-scipy==1.16.3
+scipy==1.13.1
 seaborn==0.13.2
-shap==0.54.1
-xgboost==3.4.1
+shap==0.46.0
+xgboost==2.1.4
 
-# Versions were not captured in the saved pip freeze output
+# Additional dependencies
 ucimlrepo==0.0.7
-imbalanced-learn==0.14.2
-streamlit==1.66.1
+imbalanced-learn==0.12.4
+streamlit==1.40.2
+plotly==5.24.1
+itsdangerous==2.2.0
